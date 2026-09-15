@@ -1,66 +1,44 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'dart:async';
 
-/// Service to fetch live travel information from 100% free, public APIs.
-/// - Wikipedia REST API: Provides live destination summaries and real photos.
-/// - Open-Meteo API: Provides real-time weather and temperature without any API key.
+/// Local Dummy Data Service for Travel Planner.
+/// Provides mock destination details and weather locally without external API dependencies.
+/// This keeps the app fast, reliable, and completely offline-friendly.
 class TravelApiService {
-  // Fetch summary and image for a place from Wikipedia API
+  /// Fetches rich dummy overview and guide information for a destination
   static Future<Map<String, String?>?> fetchPlaceLiveInfo(String placeName) async {
-    try {
-      final url = Uri.parse(
-        'https://en.wikipedia.org/api/rest_v1/page/summary/${Uri.encodeComponent(placeName)}',
-      );
+    // Simulate a brief asynchronous response for realistic Flutter data flow
+    await Future.delayed(const Duration(milliseconds: 150));
 
-      final response = await http.get(url, headers: {
-        'User-Agent': 'FlutterTravelApp/1.0 (travel_planner_beginner_project)',
-        'Accept': 'application/json',
-      }).timeout(const Duration(seconds: 5));
+    final Map<String, String> dummyOverviews = {
+      'Paris':
+          'Paris offers romantic tree-lined boulevards, world-renowned art collections at the Louvre, the iconic Eiffel Tower, bohemian cafes in Montmartre, and sunset boat cruises along the Seine.',
+      'Kyoto':
+          'Kyoto was Japan\'s imperial capital for over a millennium. It is renowned for thousands of historic Buddhist temples, serene zen rock gardens, bamboo forests in Arashiyama, and traditional tea ceremonies.',
+      'Rome':
+          'Rome is an open-air museum where ancient history meets modern vitality. Explore the Colosseum, Roman Forum, Trevi Fountain, and the historic treasures of Vatican City.',
+      'Bali':
+          'Bali is Indonesia\'s premier tropical paradise. Famous for emerald rice terraces in Ubud, volcanic peaks, sacred seaside temples, surf beaches, and holistic retreats.',
+      'Cairo':
+          'Cairo stands on the banks of the Nile, famous for the monumental Pyramids of Giza, the Great Sphinx, the Grand Egyptian Museum, and lively traditional bazaars.',
+      'New York':
+          'New York City is a vibrant global metropolis featuring Central Park, Broadway theater, world-class shopping on 5th Avenue, and stunning views from the Empire State Building.',
+    };
 
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        final extract = data['extract'] as String?;
-        final thumbnail = data['thumbnail'] != null ? data['thumbnail']['source'] as String? : null;
-        final description = data['description'] as String?;
+    final overview = dummyOverviews[placeName] ??
+        'A magnificent destination celebrated for scenic landscapes, local gastronomy, and rich cultural traditions.';
 
-        return {
-          'extract': extract,
-          'thumbnail': thumbnail,
-          'description': description,
-        };
-      }
-    } catch (e) {
-      // If offline or request fails, gracefully return null so app uses default data
-      // ponytail: naive fallback to avoid breaking UI on network failure
-    }
-    return null;
+    return {
+      'extract': overview,
+      'description': 'Curated Travel Guide',
+    };
   }
 
-  // Fetch live temperature and weather condition from Open-Meteo API
+  /// Fetches dummy weather and climate data for a destination
   static Future<Map<String, dynamic>?> fetchLiveWeather(double latitude, double longitude) async {
-    try {
-      final url = Uri.parse(
-        'https://api.open-meteo.com/v1/forecast?latitude=$latitude&longitude=$longitude&current_weather=true',
-      );
-
-      final response = await http.get(url).timeout(const Duration(seconds: 5));
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        final currentWeather = data['current_weather'];
-        if (currentWeather != null) {
-          final temp = currentWeather['temperature'];
-          final wind = currentWeather['windspeed'];
-          return {
-            'temperature': '$temp°C',
-            'wind': '$wind km/h',
-          };
-        }
-      }
-    } catch (e) {
-      // Gracefully ignore network errors and let UI show standard weather
-      // ponytail: safe fallback for network timeout
-    }
-    return null;
+    await Future.delayed(const Duration(milliseconds: 150));
+    return {
+      'temperature': '24°C',
+      'wind': '10 km/h',
+    };
   }
 }

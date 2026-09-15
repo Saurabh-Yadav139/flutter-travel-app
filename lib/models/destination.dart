@@ -1,5 +1,5 @@
 // Simple data models for the Travel Planner app.
-// Beginner-friendly: plain Dart classes with constructor and sample data.
+// Beginner-friendly: plain Dart classes with constructor and dummy data.
 
 class Destination {
   final String id;
@@ -10,6 +10,7 @@ class Destination {
   final double rating;
   final String imageUrl;
   final String description;
+  final String weather;
   final List<String> highlights;
   final double latitude;
   final double longitude;
@@ -23,6 +24,7 @@ class Destination {
     required this.rating,
     required this.imageUrl,
     required this.description,
+    required this.weather,
     required this.highlights,
     required this.latitude,
     required this.longitude,
@@ -67,7 +69,7 @@ class Booking {
   });
 }
 
-// Initial curated travel destinations (with real high-res images and coordinates)
+// Curated dummy travel destinations data
 final List<Destination> sampleDestinations = [
   const Destination(
     id: '1',
@@ -77,7 +79,8 @@ final List<Destination> sampleDestinations = [
     pricePerDay: 180,
     rating: 4.8,
     imageUrl: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=900&q=80',
-    description: 'Paris, France\'s capital, is a major European city and a global center for art, fashion, gastronomy and culture.',
+    description: 'Paris, France\'s capital, is a major European city and a global center for art, fashion, gastronomy, and historic architecture.',
+    weather: '21°C • Mild',
     highlights: ['Eiffel Tower', 'Louvre Museum', 'Seine River Cruise', 'Montmartre'],
     latitude: 48.8566,
     longitude: 2.3522,
@@ -90,7 +93,8 @@ final List<Destination> sampleDestinations = [
     pricePerDay: 140,
     rating: 4.9,
     imageUrl: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=900&q=80',
-    description: 'Kyoto is famous for its numerous classical Buddhist temples, gardens, imperial palaces, Shinto shrines and traditional wooden houses.',
+    description: 'Kyoto is famous for its classical Buddhist temples, traditional zen gardens, imperial palaces, and centuries-old wooden teahouses.',
+    weather: '19°C • Pleasant',
     highlights: ['Fushimi Inari', 'Arashiyama Bamboo Grove', 'Kinkaku-ji', 'Gion District'],
     latitude: 35.0116,
     longitude: 135.7681,
@@ -103,7 +107,8 @@ final List<Destination> sampleDestinations = [
     pricePerDay: 160,
     rating: 4.7,
     imageUrl: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=900&q=80',
-    description: 'Rome, the eternal city, is renowned for nearly 3,000 years of globally influential art, architecture and culture.',
+    description: 'Rome, the eternal city, is renowned for nearly 3,000 years of globally influential art, ancient monuments, and culinary delights.',
+    weather: '24°C • Sunny',
     highlights: ['Colosseum', 'Vatican City', 'Trevi Fountain', 'Pantheon'],
     latitude: 41.9028,
     longitude: 12.4964,
@@ -116,7 +121,8 @@ final List<Destination> sampleDestinations = [
     pricePerDay: 85,
     rating: 4.8,
     imageUrl: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=900&q=80',
-    description: 'Bali is an Indonesian island known for its forested volcanic mountains, iconic rice paddies, beaches and coral reefs.',
+    description: 'Bali is an Indonesian island paradise known for forested volcanic peaks, pristine beaches, coral reefs, and vibrant Hindu culture.',
+    weather: '28°C • Warm',
     highlights: ['Ubud Monkey Forest', 'Tegallalang Rice Terraces', 'Tanah Lot Temple', 'Kuta Beach'],
     latitude: -8.4095,
     longitude: 115.1889,
@@ -129,7 +135,8 @@ final List<Destination> sampleDestinations = [
     pricePerDay: 95,
     rating: 4.6,
     imageUrl: 'https://images.unsplash.com/photo-1572252009286-268acec5ca0a?auto=format&fit=crop&w=900&q=80',
-    description: 'Cairo, Egypt’s sprawling capital, is set on the Nile River. At its heart is Tahrir Square and the vast Egyptian Museum.',
+    description: 'Cairo, Egypt’s bustling capital on the Nile River, is home to the world-famous Great Pyramids and ancient historic quarters.',
+    weather: '31°C • Warm',
     highlights: ['Giza Pyramids', 'The Sphinx', 'Egyptian Museum', 'Khan el-Khalili Bazaar'],
     latitude: 30.0444,
     longitude: 31.2357,
@@ -142,14 +149,15 @@ final List<Destination> sampleDestinations = [
     pricePerDay: 220,
     rating: 4.7,
     imageUrl: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=900&q=80',
-    description: 'New York City comprises 5 boroughs sitting where the Hudson River meets the Atlantic Ocean, featuring world-class sights.',
+    description: 'New York City is a global powerhouse of culture, music, theater, and finance with iconic skyscrapers and lush Central Park.',
+    weather: '20°C • Clear',
     highlights: ['Central Park', 'Times Square', 'Statue of Liberty', 'Empire State Building'],
     latitude: 40.7128,
     longitude: -74.0060,
   ),
 ];
 
-// Initial starter itinerary items
+// Initial starter dummy itinerary items
 List<ItineraryActivity> defaultItineraryActivities = [
   ItineraryActivity(
     id: 'act-1',

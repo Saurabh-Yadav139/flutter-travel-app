@@ -31,22 +31,16 @@ class _DestinationDetailScreenState extends State<DestinationDetailScreen> {
     _loadLivePlaceData();
   }
 
-  // Fetch real-time data from Wikipedia and Open-Meteo APIs
+  // Fetch place data from dummy data service
   Future<void> _loadLivePlaceData() async {
-    final wikiInfo = await TravelApiService.fetchPlaceLiveInfo(widget.destination.name);
-    final weatherInfo = await TravelApiService.fetchLiveWeather(
-      widget.destination.latitude,
-      widget.destination.longitude,
-    );
+    final info = await TravelApiService.fetchPlaceLiveInfo(widget.destination.name);
 
     if (mounted) {
       setState(() {
-        if (wikiInfo != null && wikiInfo['extract'] != null && wikiInfo['extract']!.isNotEmpty) {
-          _liveDescription = wikiInfo['extract'];
+        if (info != null && info['extract'] != null && info['extract']!.isNotEmpty) {
+          _liveDescription = info['extract'];
         }
-        if (weatherInfo != null && weatherInfo['temperature'] != null) {
-          _liveWeather = weatherInfo['temperature'];
-        }
+        _liveWeather = widget.destination.weather;
         _isLoadingLive = false;
       });
     }
@@ -201,10 +195,10 @@ class _DestinationDetailScreenState extends State<DestinationDetailScreen> {
                       const SizedBox(width: 12),
                       _buildStatCard(
                         icon: Icons.wb_sunny_outlined,
-                        title: 'Live Weather',
-                        value: _liveWeather ?? '22°C',
+                        title: 'Weather',
+                        value: _liveWeather ?? dest.weather,
                         color: Colors.orange,
-                        isLive: _liveWeather != null,
+                        isLive: true,
                       ),
                       const SizedBox(width: 12),
                       _buildStatCard(
@@ -218,7 +212,10 @@ class _DestinationDetailScreenState extends State<DestinationDetailScreen> {
                   const SizedBox(height: 24),
 
                   // About Section
-                  Row(
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 8,
+                    runSpacing: 4,
                     children: [
                       Text(
                         'About Destination',
@@ -226,7 +223,6 @@ class _DestinationDetailScreenState extends State<DestinationDetailScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(width: 8),
                       if (_liveDescription != null)
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
@@ -236,7 +232,7 @@ class _DestinationDetailScreenState extends State<DestinationDetailScreen> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: const Text(
-                            'Live Wikipedia',
+                            'Travel Guide',
                             style: TextStyle(fontSize: 10, color: Colors.teal, fontWeight: FontWeight.bold),
                           ),
                         ),
